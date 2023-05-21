@@ -46,7 +46,7 @@ export const getTokens =
     });
 
 export const getMe =
-  async ({ secure_resource, property_keys }: IMeRequestParameter) =>
+  ({ secure_resource, property_keys }: IMeRequestParameter) =>
   (access_token: string) =>
     Fetcher.post<IMeResponse>({
       uri: API_URL + "/v2/user/me",
