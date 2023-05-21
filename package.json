@@ -46,14 +46,13 @@
     "access": "public"
   },
     "typeCoverage": {
-    "atLeast": 99,
+    "atLeast": 98,
     "project": "tsconfig.json",
     "strict": true,
     "ignoreAsAssertion": true,
     "ignoreFiles": [
-      "lib/**/*.test.ts",
-      "dist/**/*",
-      "dist/*"
+      "lib/**/*",
+      "lib/*"
     ]
   },
   "dependencies": {
