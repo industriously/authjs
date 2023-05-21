@@ -1,10 +1,10 @@
-name: Coverage Comment
+name: Type Report
 on:
   - pull_request
   - push
 
 jobs:
-  type_comment:
+  type_report:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,7 +14,7 @@ jobs:
         run: npm ci
 
       - name: Type Report
-        run: npm run type-coverage > type-coverage.txt
+        run: npm run type:report > type-coverage.txt
 
       - name: Type Comment Finding
         if: ${{ github.event.action == 'synchronize' }}
