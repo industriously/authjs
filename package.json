@@ -10,7 +10,6 @@
     "prettier": "prettier . -c",
     "prettier:fix": "prettier . -w",
     "type:report": "type-coverage --detail",
-    "test": "jest",
     "build": "rimraf ./lib && tsc -p ./tsconfig.build.json"
   },
   "devDependencies": {
@@ -47,7 +46,6 @@
     "access": "public"
   },
   "dependencies": {
-    "googleapis": "^118.0.0",
     "jsonwebtoken": "^9.0.0",
     "node-fetch": "^3.3.1"
   }
