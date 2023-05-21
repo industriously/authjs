@@ -36,7 +36,7 @@ export namespace JwtExtractFrom {
       if (cookies == null) return { type: "error", result: null };
       if (typeof cookies !== "object") return { type: "error", result: null };
 
-      const value = cookies[key];
+      const value = cookies[key] as unknown;
       if (typeof value !== "string") return { type: "error", result: null };
       return { type: "ok", result: value };
     };
