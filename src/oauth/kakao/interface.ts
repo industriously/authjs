@@ -202,12 +202,14 @@ export interface IMeResponse {
    * 서비스에 연결 완료된 시각, UTC*
    *
    * yyyyMMddHHmmss 형식의 String
+   * @foramt date-time
    */
   readonly connected_at?: string;
   /**
    * 카카오싱크 간편가입을 통해 로그인한 시각, UTC*
    *
    * yyyyMMddHHmmss 형식의 String
+   * @foramt date-time
    */
   readonly synched_at?: string;
   /**
