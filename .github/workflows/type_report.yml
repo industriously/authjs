@@ -1,7 +1,6 @@
 name: Type Report
 on:
   - pull_request
-  - push
 
 jobs:
   type_report:
