@@ -9,20 +9,27 @@ export namespace Fetcher {
     uri: string;
     headers?: Record<string, string>;
   }): Promise<IResult<T, string>> => {
-    const response = await fetch(uri, {
-      method: "GET",
-      headers: {
-        "User-Agent": "request",
-        ...headers
-      }
-    });
-    if (response.status !== 200 && response.status !== 201)
-      return { type: "error", result: await response.text() };
+    try {
+      const response = await fetch(uri, {
+        method: "GET",
+        headers: {
+          "User-Agent": "request",
+          ...headers
+        }
+      });
+      if (response.status !== 200 && response.status !== 201)
+        return { type: "error", result: await response.text() };
 
-    return {
-      type: "ok",
-      result: (await response.json()) as T
-    };
+      return {
+        type: "ok",
+        result: (await response.json()) as T
+      };
+    } catch (error: unknown) {
+      return {
+        type: "error",
+        result: error instanceof Error ? error.message : ""
+      };
+    }
   };
 
   export const post = async <T>({
@@ -34,19 +41,27 @@ export namespace Fetcher {
     body: object | string;
     headers?: Record<string, string>;
   }): Promise<IResult<T, string>> => {
-    const response = await fetch(uri, {
-      body: typeof body === "string" ? body : JSON.stringify(body),
-      headers: {
-        "User-Agent": "request",
-        ...headers
-      }
-    });
-    if (response.status !== 200 && response.status !== 201)
-      return { type: "error", result: await response.text() };
+    try {
+      const response = await fetch(uri, {
+        method: "POST",
+        body: typeof body === "string" ? body : JSON.stringify(body),
+        headers: {
+          "User-Agent": "request",
+          ...headers
+        }
+      });
+      if (response.status !== 200 && response.status !== 201)
+        return { type: "error", result: await response.text() };
 
-    return {
-      type: "ok",
-      result: (await response.json()) as T
-    };
+      return {
+        type: "ok",
+        result: (await response.json()) as T
+      };
+    } catch (error: unknown) {
+      return {
+        type: "error",
+        result: error instanceof Error ? error.message : ""
+      };
+    }
   };
 }

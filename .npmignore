@@ -16,7 +16,7 @@ type-coverage.txt
 .env.*
 
 # source
-src
+src/**/*
 
 # definitions
 !**/*.d.ts
