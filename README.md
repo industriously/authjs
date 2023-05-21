@@ -39,7 +39,7 @@ const options: Github.IOauth2Options = {
   client_id: "",
   client_secret: "",
   redirect_uri: "",
-  scope: ["user"]
+  scope: ["read:user", "user:email"]
 };
 
 const login_uri = Github.getLoginUri(options);

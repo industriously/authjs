@@ -16,7 +16,7 @@ export namespace JwtExtractFrom {
       if (body == null) return { type: "error", result: null };
       if (typeof body !== "object") return { type: "error", result: null };
 
-      const value = body[key] as unknown;
+      const value = (body as any)[key] as unknown;
       if (typeof value !== "string") return { type: "error", result: null };
       return { type: "ok", result: value };
     };
@@ -32,11 +32,11 @@ export namespace JwtExtractFrom {
   export const Cookie =
     (key: string): JwtExtractorFromExpressRequest =>
     (req) => {
-      const cookies = req.cookies;
+      const cookies = req["cookies"] as unknown;
       if (cookies == null) return { type: "error", result: null };
       if (typeof cookies !== "object") return { type: "error", result: null };
 
-      const value = cookies[key] as unknown;
+      const value = (cookies as any)[key] as unknown;
       if (typeof value !== "string") return { type: "error", result: null };
       return { type: "ok", result: value };
     };
