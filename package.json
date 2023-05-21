@@ -45,6 +45,17 @@
   "publishConfig": {
     "access": "public"
   },
+    "typeCoverage": {
+    "atLeast": 99,
+    "project": "tsconfig.json",
+    "strict": true,
+    "ignoreAsAssertion": true,
+    "ignoreFiles": [
+      "lib/**/*.test.ts",
+      "dist/**/*",
+      "dist/*"
+    ]
+  },
   "dependencies": {
     "jsonwebtoken": "^9.0.0",
     "node-fetch": "^3.3.1"
