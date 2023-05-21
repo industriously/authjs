@@ -1,0 +1,30 @@
+.github/**/*
+.github/*
+
+.vscode/**/*
+.vscode/*
+
+coverage/**/*
+coverage/*
+
+coverage-ts/**/*
+coverage-ts/*
+
+type-coverage.txt
+
+.env
+.env.*
+
+# source
+src
+
+# definitions
+!**/*.d.ts
+!*.d.ts
+
+.eslintrc.js
+*.config.js
+tsconfig.json
+tsconfig.build.json
+
+*.tsbuildinfo

@@ -1,0 +1,53 @@
+{
+  "name": "@devts/authjs",
+  "version": "0.0.1",
+  "description": "Oauth2 Library",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "eslint": "eslint src",
+    "prettier": "prettier . -c",
+    "prettier:fix": "prettier . -w",
+    "type-coverage": "type-coverage --detail",
+    "test": "jest",
+    "build": "rimraf ./lib && tsc -p ./tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^20.2.1",
+    "@typescript-eslint/eslint-plugin": "~5.59.6",
+    "@typescript-eslint/parser": "~5.59.6",
+    "eslint": "8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
+    "type-coverage": "^2.25.3",
+    "typescript": "~5.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-industriously:industriously/authjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/industriously/authjs/issues"
+  },
+  "keywords": [
+    "nestjs-auth",
+    "nest-auth",
+    "auth",
+    "Oauth2",
+    "passport",
+    "authentication"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.0",
+    "node-fetch": "^3.3.1"
+  }
+}
