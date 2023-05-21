@@ -33,7 +33,7 @@ npm i @devts/authjs
 ### Github
 
 ```typescript
-import { Github } from "@devts/authjs";
+import { Github, isError, isOk } from "@devts/authjs";
 
 const options: Github.IOauth2Options = {
   client_id: "",
@@ -45,21 +45,21 @@ const options: Github.IOauth2Options = {
 const login_uri = Github.getLoginUri(options);
 // request document api to login_uri
 
-const { type, result } = await Github.getTokens(options)("code");
+const tokens = await Github.getTokens(options)("code");
 
-if (type === "error") {
-  console.error(result); // this is error message from gitub api.
+if (isError(tokens)) {
+  console.error(tokens.result); // this is error message from gitub api.
 }
-if (type === "ok") {
-  console.log(result); // this is github token.
-  const user = await Github.getUser(result.access_token);
-  if (user.type === "ok") {
+if (isOk(tokens)) {
+  console.log(tokens.result); // this is github token.
+  const user = await Github.getUser(tokens.result.access_token);
+  if (isOk(user)) {
     const userinfo: Github.IUser = user.result;
     console.log(userinfo);
   }
 
   const emails = await Github.getEmails(result.access_token);
-  if (emails.type === "ok") {
+  if (isOk(emails)) {
     const email_list: Github.IEmail[] = emails.result;
     console.log(email_list);
   }
