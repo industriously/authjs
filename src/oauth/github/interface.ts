@@ -111,6 +111,7 @@ export interface IPrivateUser extends IPublicUser {
 export type IUser = IPublicUser | IPrivateUser;
 
 export interface IEmail {
+  /** @format email */
   email: string;
   primary: boolean;
   verified: boolean;

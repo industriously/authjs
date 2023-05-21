@@ -172,6 +172,7 @@ export interface IIdTokenPayload {
    * 필요한 동의 항목: 카카오계정(이메일)
    *
    * 비고: ID 토큰 페이로드의 이메일은 유효하고 인증된 이메일 값이 있는 경우에만 제공, 이메일 사용 시 주의사항 참고
+   * @format email
    */
   readonly email?: string;
 }
@@ -232,6 +233,7 @@ export interface IPartner {
    * 카카오톡 메시지 API 사용 권한이 있는 경우에만 제공
    *
    * 필요한 동의 항목: 카카오톡 메시지 전송(talk_message)
+   * @format uuid
    */
   readonly uuid?: string;
 }
@@ -301,6 +303,7 @@ export interface IKakaoAccount {
    * 필요한 동의 항목: 카카오계정(이메일)
    *
    * 비고: 이메일 사용 시 주의사항
+   * @format email
    */
   readonly email?: string;
   /**
