@@ -48,7 +48,7 @@ const login_uri = Github.getLoginUri(options);
 const { type, result } = await Github.getTokens(options)("code");
 
 if (type === "error") {
-  throw Error(result); // this is error message from gitub api.
+  console.error(result); // this is error message from gitub api.
 }
 if (type === "ok") {
   console.log(result); // this is github token.

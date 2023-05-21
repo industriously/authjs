@@ -1,7 +1,9 @@
 name: Type Report
 on:
   - pull_request
-  - push
+
+permissions:
+  pull-requests: write
 
 jobs:
   type_report:
@@ -16,19 +18,19 @@ jobs:
       - name: Type Report
         run: npm run type:report > type-coverage.txt
 
-      - name: Type Comment Finding
-        if: ${{ github.event.action == 'synchronize' }}
-        uses: peter-evans/find-comment@v2
-        id: fc
+      - name: Create or Update PR Comment 💬
+        uses: actions/github-script@main
         with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: type-coverage
+          script: |
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const cmts = await github.rest.issues.listComments({ issue_number, owner, repo });
 
-      - name: Type Comment
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body-file: ./type-coverage.txt
-          edit-mode: replace
+            const comment = cmts.data.find(cmt => cmt.user.login === 'github-actions[bot]');
+
+            const fs = require('fs');
+            const path = './type-coverage.txt';
+            const body = fs.readFileSync(path, 'utf8');
+            comment
+                ? github.rest.issues.updateComment({ comment_id: comment.id, owner, repo, body })
+                : github.rest.issues.createComment({ issue_number, owner, repo, body });
