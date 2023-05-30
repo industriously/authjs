@@ -1,14 +1,17 @@
 import fetch from "node-fetch";
 import { IResult } from "../common/result.interface";
+import { IErrorResponse } from "../common";
 
 export namespace Fetcher {
   export const get = async <T>({
     uri,
-    headers = {}
+    headers = {},
+    status = [200]
   }: {
     uri: string;
     headers?: Record<string, string>;
-  }): Promise<IResult<T, string>> => {
+    status?: number[];
+  }): Promise<IResult<T, IErrorResponse>> => {
     try {
       const response = await fetch(uri, {
         method: "GET",
@@ -17,8 +20,11 @@ export namespace Fetcher {
           ...headers
         }
       });
-      if (response.status !== 200 && response.status !== 201)
-        return { type: "error", result: await response.text() };
+      if (!status.includes(response.status))
+        return {
+          type: "error",
+          result: { status: response.status, rawbody: await response.text() }
+        };
 
       return {
         type: "ok",
@@ -27,7 +33,10 @@ export namespace Fetcher {
     } catch (error: unknown) {
       return {
         type: "error",
-        result: error instanceof Error ? error.message : ""
+        result: {
+          status: 500,
+          rawbody: error instanceof Error ? error.message : ""
+        }
       };
     }
   };
@@ -35,12 +44,14 @@ export namespace Fetcher {
   export const post = async <T>({
     uri,
     body,
-    headers = {}
+    headers = {},
+    status = [201]
   }: {
     uri: string;
     body: object | string;
     headers?: Record<string, string>;
-  }): Promise<IResult<T, string>> => {
+    status?: number[];
+  }): Promise<IResult<T, IErrorResponse>> => {
     try {
       const response = await fetch(uri, {
         method: "POST",
@@ -50,8 +61,11 @@ export namespace Fetcher {
           ...headers
         }
       });
-      if (response.status !== 200 && response.status !== 201)
-        return { type: "error", result: await response.text() };
+      if (!status.includes(response.status))
+        return {
+          type: "error",
+          result: { status: response.status, rawbody: await response.text() }
+        };
 
       return {
         type: "ok",
@@ -60,7 +74,10 @@ export namespace Fetcher {
     } catch (error: unknown) {
       return {
         type: "error",
-        result: error instanceof Error ? error.message : ""
+        result: {
+          status: 500,
+          rawbody: error instanceof Error ? error.message : ""
+        }
       };
     }
   };

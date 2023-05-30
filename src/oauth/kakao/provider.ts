@@ -1,10 +1,6 @@
+import { IErrorResponse, IResult } from "../../common";
 import { Fetcher } from "../../utils/fetcher";
-import {
-  IMeRequestParameter,
-  IMeResponse,
-  IOauth2Options,
-  ITokens
-} from "./interface";
+import { IMeResponse, IOauth2Options, ITokens } from "./interface";
 
 const LOGIN_URL = "https://kauth.kakao.com";
 const API_URL = "https://kapi.kakao.com";
@@ -30,7 +26,7 @@ export const getLoginUri = (options: IOauth2Options) => {
 
 export const getTokens =
   ({ client_id, client_secret, redirect_uri }: IOauth2Options) =>
-  (code: string) =>
+  (code: string): Promise<IResult<ITokens, IErrorResponse>> =>
     Fetcher.post<ITokens>({
       uri: LOGIN_URL + "/oauth/token",
       body: new URLSearchParams({
@@ -42,21 +38,15 @@ export const getTokens =
       }).toString(),
       headers: {
         "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
-      }
+      },
+      status: [200]
     });
 
-export const getMe =
-  ({ secure_resource, property_keys }: IMeRequestParameter) =>
-  (access_token: string) =>
-    Fetcher.post<IMeResponse>({
-      uri: API_URL + "/v2/user/me",
-      body: new URLSearchParams({
-        grant_type: "authorization_code",
-        secure_resource: secure_resource ? "true" : "false",
-        property_keys: JSON.stringify(property_keys)
-      }).toString(),
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded",
-        Authorization: `Bearer ${access_token}`
-      }
-    });
+export const getMe = (
+  access_token: string
+): Promise<IResult<IMeResponse, IErrorResponse>> =>
+  Fetcher.get<IMeResponse>({
+    uri: API_URL + "/v2/user/me",
+    headers: { Authorization: `Bearer ${access_token}` },
+    status: [200]
+  });

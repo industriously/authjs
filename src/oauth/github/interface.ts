@@ -127,3 +127,9 @@ export interface ITokens {
   refresh_token?: string;
   refresh_token_expires_in?: string;
 }
+
+export interface IErrorBody {
+  error: string;
+  error_description: string;
+  error_uri: string;
+}
